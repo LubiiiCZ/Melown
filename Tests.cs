@@ -1,9 +1,9 @@
-﻿using Allure.Commons;
-using NUnit.Allure.Attributes;
-using NUnit.Allure.Core;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using Melown.Pages;
 using Melown.Core;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using Allure.Net.Commons;
 
 namespace Melown;
 
@@ -22,7 +22,7 @@ public class Tests
 
     [AllureOwner("LD for Melown")]
     [AllureTag("Regression")]
-    [AllureSeverity(SeverityLevel.critical)]
+    [AllureSeverity()]
     [Test, Order(1)]
     public void StereogramSolverPageLoadTest()
     {
