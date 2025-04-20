@@ -12,10 +12,16 @@ public static class DriverFactory
         new DriverManager().SetUpDriver(new ChromeConfig());
         var chromeOptions = new ChromeOptions();
         chromeOptions.AddArgument("--start-maximized");
+        chromeOptions.AddArgument("--no-sandbox");
+        chromeOptions.AddArgument("--disable-dev-shm-usage");
+
         if (headless)
         {
             chromeOptions.AddArgument("--headless");
         }
+
+        string tempProfileDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        chromeOptions.AddArgument($"--user-data-dir={tempProfileDir}");
 
         var driver = new ChromeDriver(chromeOptions);
 

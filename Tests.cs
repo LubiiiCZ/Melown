@@ -12,7 +12,7 @@ public class Tests
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        WebDriver = DriverFactory.CreateDriver(false);
+        WebDriver = DriverFactory.CreateDriver(true);
         stereogramSolver = new(WebDriver!);
     }
 
