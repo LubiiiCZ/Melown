@@ -40,7 +40,7 @@ jobs:
       run: dotnet test --logger "trx;LogFileName=test-results.trx" --no-build --verbosity normal
 
     - name: Convert TRX to HTML
-      run: trxlog2html -i .\TestResults\test-results.trx -o report.html
+      run: trxlog2html -i TestResults/test-results.trx -o report.html
 
     - name: Upload HTML Report
       uses: actions/upload-artifact@v4
