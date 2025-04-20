@@ -34,16 +34,12 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
-    - name: Install Allure CLI
-      run: |
-        wget https://github.com/allure-framework/allure2/releases/latest/download/allure-2.27.0.tgz
-        tar -xzf allure-2.27.0.tgz
-        sudo mv allure-2.27.0 /opt/allure
-        sudo ln -s /opt/allure/bin/allure /usr/bin/allure
-
-    - name: Generate Allure HTML Report
-      run: |
-        allure generate --clean allure-results -o allure-report
+    - name: Generate Allure Report
+      uses: simple-elf/allure-report-action@v1.7
+      with:
+        allure_results: allure-results
+        report_path: allure-report
+        allure_report: true
 
     - name: Upload Allure HTML Report
       uses: actions/upload-artifact@v4
