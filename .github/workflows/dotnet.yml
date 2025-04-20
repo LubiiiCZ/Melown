@@ -35,11 +35,10 @@ jobs:
       run: dotnet test --no-build --verbosity normal
 
     - name: Generate Allure Report
-      uses: simple-elf/allure-report-action@v1.7
+      uses: simple-elf/allure-report-action@master
       with:
         allure_results: allure-results
-        report_path: allure-report
-        allure_report: true
+        allure_report: allure-report
 
     - name: Upload Allure HTML Report
       uses: actions/upload-artifact@v4
