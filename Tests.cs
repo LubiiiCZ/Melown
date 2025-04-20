@@ -1,13 +1,9 @@
 ﻿using OpenQA.Selenium;
 using Melown.Pages;
 using Melown.Core;
-using Allure.NUnit;
-using Allure.NUnit.Attributes;
-using Allure.Net.Commons;
 
 namespace Melown;
 
-[AllureNUnit]
 public class Tests
 {
     protected IWebDriver? WebDriver { get; set; }
@@ -20,9 +16,6 @@ public class Tests
         stereogramSolver = new(WebDriver!);
     }
 
-    [AllureOwner("LD for Melown")]
-    [AllureTag("Regression")]
-    [AllureSeverity()]
     [Test, Order(1)]
     public void StereogramSolverPageLoadTest()
     {
@@ -30,9 +23,6 @@ public class Tests
         Assert.That(stereogramSolver.Title, Is.EqualTo("Stereogram solver"), "Title does not match.");
     }
 
-    [AllureOwner("LD for Melown")]
-    [AllureTag("Regression")]
-    [AllureSeverity(SeverityLevel.normal)]
     [Test, Order(2)]
     public void StereogramSolverPresetSelectionTest()
     {

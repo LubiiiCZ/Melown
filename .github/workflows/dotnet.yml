@@ -19,6 +19,9 @@ jobs:
       with:
         dotnet-version: 9.0.x
 
+    - name: Get trxlog2html Tool
+      run: dotnet tool install --global trxlog2html
+
     - name: Install Chrome
       run: |
         sudo apt-get update
@@ -29,19 +32,18 @@ jobs:
 
     - name: Restore dependencies
       run: dotnet restore
+
     - name: Build
       run: dotnet build --no-restore
+
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --logger "trx;LogFileName=test-results.trx" --no-build --verbosity normal
 
-    - name: Generate Allure Report
-      uses: simple-elf/allure-report-action@master
-      with:
-        allure_results: allure-results
-        allure_report: allure-report
+    - name: Convert TRX to HTML
+      run: trxlog2html -i .\TestResults\test-results.trx -o report.html
 
-    - name: Upload Allure HTML Report
+    - name: Upload HTML Report
       uses: actions/upload-artifact@v4
       with:
-        name: allure-html-report
-        path: allure-report
+        name: html-report
+        path: report.html
