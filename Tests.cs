@@ -44,7 +44,8 @@ public class Tests
     {
         stereogramSolver.SelectPreset(1);
 
-        using var expectedImage = new MagickImage("Images\\expected-shark.png");
+        var imagePath = Path.Combine(AppContext.BaseDirectory, "Images", "expected-shark.png");
+        using var expectedImage = new MagickImage(imagePath);
         using var actualImage = new MagickImage(stereogramSolver.GetCanvasBytes());
         var errorInfo = actualImage.Compare(expectedImage);
 
@@ -56,7 +57,8 @@ public class Tests
     {
         stereogramSolver.SelectPreset(2);
 
-        using var expectedImage = new MagickImage("Images\\expected-shark.png");
+        var imagePath = Path.Combine(AppContext.BaseDirectory, "Images", "expected-shark.png");
+        using var expectedImage = new MagickImage(imagePath);
         using var actualImage = new MagickImage(stereogramSolver.GetCanvasBytes());
         var errorInfo = actualImage.Compare(expectedImage);
 
