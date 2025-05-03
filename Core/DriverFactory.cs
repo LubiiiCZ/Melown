@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using WebDriverManager;
@@ -22,6 +23,11 @@ public static class DriverFactory
 
         string tempProfileDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
         chromeOptions.AddArgument($"--user-data-dir={tempProfileDir}");
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        {
+            chromeOptions.BinaryLocation = "/usr/bin/google-chrome";
+        }
 
         var driver = new ChromeDriver(chromeOptions);
 
