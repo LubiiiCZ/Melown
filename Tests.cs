@@ -34,7 +34,6 @@ public class Tests
             for (int i = 0; i < expectedImages.Length; i++)
             {
                 stereogramSolver.SelectPreset(i + 1);
-                Thread.Sleep(500); //process javaScript
                 Assert.That(stereogramSolver.GetSourceImageSrc(), Does.Contain(expectedImages[i]), "Source image src is incorrect.");
             }
         }
@@ -44,7 +43,6 @@ public class Tests
     public void StereogramSolverResultComparisonTest()
     {
         stereogramSolver.SelectPreset(1);
-        Thread.Sleep(500); //process javaScript
 
         using var expectedImage = new MagickImage("Images\\expected-shark.png");
         using var actualImage = new MagickImage(stereogramSolver.GetCanvasBytes());
@@ -57,7 +55,6 @@ public class Tests
     public void StereogramSolverResultComparisonNegativeTest()
     {
         stereogramSolver.SelectPreset(2);
-        Thread.Sleep(500); //process javaScript
 
         using var expectedImage = new MagickImage("Images\\expected-shark.png");
         using var actualImage = new MagickImage(stereogramSolver.GetCanvasBytes());

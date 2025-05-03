@@ -23,6 +23,7 @@ public class StereogramSolver(IWebDriver driver)
     {
         SelectElement select = new(PresetSelect);
         select.SelectByIndex(index);
+        Thread.Sleep(1000); // Wait for the JavaScript to process the selection
     }
 
     public string GetSourceImageSrc()
