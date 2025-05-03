@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using Melown.Pages;
 using Melown.Core;
+using ImageMagick;
 
 namespace Melown;
 
@@ -14,12 +15,12 @@ public class Tests
     {
         WebDriver = DriverFactory.CreateDriver(true);
         stereogramSolver = new(WebDriver!);
+        stereogramSolver.NavigateTo();
     }
 
     [Test, Order(1)]
     public void StereogramSolverPageLoadTest()
     {
-        stereogramSolver.NavigateTo();
         Assert.That(stereogramSolver.Title, Is.EqualTo("Stereogram solver"), "Title does not match.");
     }
 
@@ -39,10 +40,35 @@ public class Tests
         }
     }
 
+    [Test, Order(3)]
+    public void StereogramSolverResultComparisonTest()
+    {
+        stereogramSolver.SelectPreset(1);
+        Thread.Sleep(500); //process javaScript
+
+        using var expectedImage = new MagickImage("Images\\expected-shark.png");
+        using var actualImage = new MagickImage(stereogramSolver.GetCanvasBytes());
+        var errorInfo = actualImage.Compare(expectedImage);
+
+        Assert.That(errorInfo.NormalizedMeanError, Is.LessThan(0.01), "Images are not similar enough.");
+    }
+
+    [Test, Order(4)]
+    public void StereogramSolverResultComparisonNegativeTest()
+    {
+        stereogramSolver.SelectPreset(2);
+        Thread.Sleep(500); //process javaScript
+
+        using var expectedImage = new MagickImage("Images\\expected-shark.png");
+        using var actualImage = new MagickImage(stereogramSolver.GetCanvasBytes());
+        var errorInfo = actualImage.Compare(expectedImage);
+
+        Assert.That(errorInfo.NormalizedMeanError, Is.GreaterThan(0.01), "Images are not different enough.");
+    }
+
     [OneTimeTearDown]
     public void OneTimeTearDown()
     {
-        Thread.Sleep(2000); //demo
         WebDriver?.Quit();
         WebDriver?.Dispose();
     }
