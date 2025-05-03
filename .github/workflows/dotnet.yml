@@ -27,9 +27,6 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y chromium-browser
 
-    - name: Set CHROMEWEBDRIVER environment variable
-      run: echo "CHROMEWEBDRIVER=/usr/bin/chromedriver" >> $GITHUB_ENV
-
     - name: Restore dependencies
       run: dotnet restore
 
