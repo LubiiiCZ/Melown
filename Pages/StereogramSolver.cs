@@ -1,3 +1,4 @@
+using ImageMagick;
 using Melown.Core;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -26,6 +27,12 @@ public class StereogramSolver(IWebDriver driver)
         SelectElement select = new(PresetSelect);
         select.SelectByIndex(index);
         Thread.Sleep(1000); // Wait for the JavaScript to process the selection
+    }
+
+    public IMagickErrorInfo CompareCanvasWithImage(MagickImage image)
+    {
+        using var canvasImage = new MagickImage(GetCanvasBytes());
+        return canvasImage.Compare(image);
     }
 
     public void SetDisplacement(int value)
