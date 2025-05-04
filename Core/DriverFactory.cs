@@ -9,9 +9,7 @@ public static class DriverFactory
 {
     public static IWebDriver CreateDriver(bool headless = true)
     {
-        var config = new ChromeConfig();
-        config.GetMatchingBrowserVersion();
-        new DriverManager().SetUpDriver(config, "135.0.7049.114");
+        new DriverManager().SetUpDriver(new ChromeConfig());
 
         var chromeOptions = new ChromeOptions();
         chromeOptions.AddArgument("--start-maximized");

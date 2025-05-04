@@ -22,10 +22,14 @@ jobs:
     - name: Get trxlog2html Tool
       run: dotnet tool install --global trxlog2html
 
-    - name: Install Chrome
+    - name: Install latest Google Chrome
       run: |
         sudo apt-get update
-        sudo apt-get install -y chromium-browser
+        sudo apt-get install -y wget gnupg
+        wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg
+        echo 'deb [signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
 
     - name: Restore dependencies
       run: dotnet restore
