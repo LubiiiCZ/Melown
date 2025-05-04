@@ -77,6 +77,20 @@ public class Tests
         Assert.That(errorInfo.NormalizedMeanError, Is.LessThan(0.01), "Images are not similar enough.");
     }
 
+    [Test, Order(6)]
+    public void StereogramSolverWrongDisplacementTest()
+    {
+        stereogramSolver.SelectPreset(1);
+        stereogramSolver.SetDisplacement(139);
+
+        var imagePath = Path.Combine(AppContext.BaseDirectory, "Images", "expected-shark.png");
+        using var expectedImage = new MagickImage(imagePath);
+        using var actualImage = new MagickImage(stereogramSolver.GetCanvasBytes());
+        var errorInfo = actualImage.Compare(expectedImage);
+
+        Assert.That(errorInfo.NormalizedMeanError, Is.GreaterThan(0.01), "Images are not different enough.");
+    }
+
     [OneTimeTearDown]
     public void OneTimeTearDown()
     {

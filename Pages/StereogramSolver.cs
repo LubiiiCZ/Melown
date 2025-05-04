@@ -13,6 +13,7 @@ public class StereogramSolver(IWebDriver driver)
     public string Title => Driver.Title;
     public IWebElement PresetSelect => Driver.FindWebElement(Driver, By.Id("preset-select"));
     public IWebElement FileInput => Driver.FindWebElement(Driver, By.Id("image-upload"));
+    public IWebElement DisplacementInput => Driver.FindWebElement(Driver, By.ClassName("full-width-range"));
     public IWebElement SourceImage => Driver.FindWebElement(Driver, By.CssSelector("img"));
 
     public void NavigateTo()
@@ -25,6 +26,18 @@ public class StereogramSolver(IWebDriver driver)
         SelectElement select = new(PresetSelect);
         select.SelectByIndex(index);
         Thread.Sleep(1000); // Wait for the JavaScript to process the selection
+    }
+
+    public void SetDisplacement(int value)
+    {
+        Js.ExecuteScript($@"
+            const slider = arguments[0];
+            slider.value = {value};
+            slider.dispatchEvent(new Event('input', {{ bubbles: true }}));
+            slider.dispatchEvent(new Event('change', {{ bubbles: true }}));
+        ", DisplacementInput);
+
+        Thread.Sleep(1000); // Wait for the JavaScript to process the input
     }
 
     public void SelectFile(string fileName)
