@@ -61,6 +61,7 @@ trxlog2html -i TestResults/test-results.trx -o report.html
 - Loading too small or big files
 - Displacement slider min/max values
 - Generation took too long
+- Displacement 0 equals to source image
 
 ## Other Non-covered Testing Areas
 
