@@ -12,6 +12,7 @@ public class StereogramSolver(IWebDriver driver)
     public WebDriverWait Wait { get; set; } = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
     public string Title => Driver.Title;
     public IWebElement PresetSelect => Driver.FindWebElement(Driver, By.Id("preset-select"));
+    public IWebElement FileInput => Driver.FindWebElement(Driver, By.Id("image-upload"));
     public IWebElement SourceImage => Driver.FindWebElement(Driver, By.CssSelector("img"));
 
     public void NavigateTo()
@@ -24,6 +25,13 @@ public class StereogramSolver(IWebDriver driver)
         SelectElement select = new(PresetSelect);
         select.SelectByIndex(index);
         Thread.Sleep(1000); // Wait for the JavaScript to process the selection
+    }
+
+    public void SelectFile(string fileName)
+    {
+        string filePath = Path.Combine(AppContext.BaseDirectory, "Images", fileName);
+        FileInput.SendKeys(filePath);
+        Thread.Sleep(1000); // Wait for the JavaScript to process the file input
     }
 
     public string GetSourceImageSrc()
